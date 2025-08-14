@@ -1,10 +1,14 @@
-from transformers import AutoTokenizer, AutoModelForCausalLM
 import os
-
 os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
 
-model_name = "moka-ai/m3e-base"
-cache_dir = "./models/m3e-base"
+from huggingface_hub import snapshot_download
 
-tokenizer = AutoTokenizer.from_pretrained(model_name, cache_dir=cache_dir)
-model = AutoModelForCausalLM.from_pretrained(model_name, cache_dir=cache_dir)
+# 下载模型
+model_path = snapshot_download(
+    repo_id="BAAI/bge-m3",
+    local_dir="BAAI/bge-m3",
+    resume_download=True,
+    force_download=True
+)
+
+print(f"模型已下载到: {model_path}")

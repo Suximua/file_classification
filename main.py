@@ -2,27 +2,17 @@ import os
 import argparse
 
 def download_model():
-    """下载m3e-base模型到本地"""
-    from transformers import AutoModel, AutoTokenizer
-    
-    model_name = "moka-ai/m3e-base"
-    save_path = "models/m3e-base"
-    
-    if not os.path.exists(save_path):
-        print(f"正在下载模型 {model_name} 到 {save_path}...")
-        model = AutoModel.from_pretrained(model_name)
-        tokenizer = AutoTokenizer.from_pretrained(model_name)
-        model.save_pretrained(save_path)
-        tokenizer.save_pretrained(save_path)
-        print("模型下载完成!")
-    else:
-        print("模型已存在，跳过下载")
+    """下载BGE-M3模型到本地"""
+    # 直接使用model_download.py脚本下载模型
+    print("使用model_download.py下载模型...")
+    os.system("python model_download.py")
+    print("模型下载完成!")
 
 def run_route1():
     """运行无需训练的方法"""
     print("\n=== 运行路线1: 语义相似度匹配 ===")
-    from route1.similarity import main as similarity_main
-    similarity_main()
+    from route1.similarity import SimilarityClassifier
+    SimilarityClassifier.main()
 
 def run_route2_finetune():
     """运行Finetune方法"""
