@@ -32,6 +32,12 @@ def get_embeddings(texts, model_path):
     for i, text in enumerate(texts):
         if (i + 1) % 50 == 0 or i == len(texts) - 1:
             print(f"嵌入向量计算进度: {i+1}/{len(texts)}")
+        
+        # 确保text是字符串类型
+        if not isinstance(text, str):
+            print(f"警告: 发现非字符串类型的文本 (索引 {i}): {type(text)}, 值: {text}")
+            # 尝试转换为字符串，如果失败则使用空字符串
+            text = str(text) if text is not None else ""
             
         inputs = tokenizer(text, return_tensors="pt", padding=True, truncation=True, max_length=512)
         # 如果有GPU则将数据移到GPU上
